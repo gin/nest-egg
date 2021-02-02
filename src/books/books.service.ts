@@ -25,6 +25,16 @@ export class BooksService {
     // book object has to have the format:
     //     { id: 1, title: 'First book', description: "This is the description for the first book", author: 'Olususi Oluyemi' },
     addBook(book): Promise<any> {
+        // Don't add data without ID
+        // TODO: return error message to API user
+        if (book.id == null) {
+            return new Promise((resolve, reject) => {
+                reject(new Error('Require id field in data'));
+            });
+        }
+
+        // TODO: Don't add data if ID already exists
+
         return new Promise(resolve => {
             this.books.push(book);
             resolve(this.books);    // check if resolve(); would return empty object.
