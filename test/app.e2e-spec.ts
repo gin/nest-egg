@@ -43,7 +43,7 @@ describe('AppController (e2e)', () => {
       .expect(201)
       .then(response => {
         assert(response.body.includes({
-          "id": "8",
+          "id": 8,
           "title": "test1"
         }));
       });

@@ -26,18 +26,20 @@ export class BooksService {
     //     { id: 1, title: 'First book', description: "This is the description for the first book", author: 'Olususi Oluyemi' },
     addBook(book): Promise<any> {
         // Don't add data without ID
-        // TODO: return error message to API user
         if (book.id == null) {
-            return new Promise((resolve, reject) => {
-                reject(new Error('Require id field in data'));
-            });
+            throw new HttpException('Require ID field in data', 400);
         }
 
-        // TODO: Don't add data if ID already exists
+        // Don't add data if ID already exists
+        const idExists = this.books.find(b => b.id == book.id);
+        if (idExists) {
+            throw new HttpException('ID already exists', 400);
+        }
 
         return new Promise(resolve => {
+            book.id = Number(book.id);
             this.books.push(book);
-            resolve(this.books);    // check if resolve(); would return empty object.
+            resolve(this.books);
         });
     }
 
